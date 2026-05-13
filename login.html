@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TBS CTS Login</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <!-- Background Effects -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="login-page">
+
+    <!-- Left Brand Panel -->
+    <div class="brand-panel">
+
+     <div class="brand-logo">
+       <img src="images/Logo.png" alt="TBS International Campus Logo">
+     </div>
+
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <span>Secure Campus Platform</span>
+      </div>
+
+      <h1>TBS CTS</h1>
+      <div class="subtitle">Convocation Tracking System</div>
+
+      <p class="description">
+        Premium real-time convocation operations platform for attendance,
+        meals, cloak handling, photo tracking, and reporting.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <i class="fas fa-qrcode"></i>
+          <span>Instant Barcode Scanning</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-user-check"></i>
+          <span>Real-Time Attendance</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Live Dashboard Analytics</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+      <div class="card-header">
+        <div class="logo-circle">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to access the system dashboard</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+
+        <div class="input-group">
+          <label>Username</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter your username"
+              required
+              autofocus
+            />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+            />
+            <button type="button"
+                    class="toggle-password"
+                    id="togglePassword">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <span>Remember Me</span>
+          </label>
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-loader"></span>
+        </button>
+
+      </form>
+
+      <div class="footer-text">
+        © 2026 TBS International Campus
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Your JavaScript -->
+
+
+  <script src="auth.js"></script>
+  <script src="login.js"></script>
+
+
+
+
+</body>
+</html>

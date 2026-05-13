@@ -1,0 +1,373 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TBS Convocation Tracking System</title>
+
+  <!-- GOOGLE FONT -->
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app-layout">
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo-section">
+
+      <h2>TBS CTS</h2>
+
+      <p>Convocation ERP</p>
+
+    </div>
+
+    <nav>
+
+      <a href="#" class="active">
+
+        <i class="fa-solid fa-house"></i>
+
+        Dashboard
+
+      </a>
+
+
+ <a href="#scanner-section">
+    <i class="fas fa-qrcode"></i>
+    Scanner
+  </a>
+
+  <a href="reports.html">
+    <i class="fas fa-chart-line"></i>
+    Reports
+  </a>
+
+  <a href="settings.html">
+    <i class="fas fa-cog"></i>
+    Settings
+  </a>
+
+  <a href="#" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i>
+    Logout
+  </a>
+
+
+
+
+    </nav>
+
+  </aside>
+
+
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main-content">
+
+ 
+
+   <!-- HEADER -->
+<header class="top-header glass-card">
+
+  <!-- LEFT SIDE -->
+  <div class="top-left">
+    <h1>TBS Convocation Tracking System</h1>
+
+    <p>Real-Time Convocation Operations Dashboard</p>
+
+    <div id="liveClock"></div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="header-right">
+    <div class="live-dot"></div>
+    <span class="live-text">LIVE SYSTEM</span>
+  </div>
+
+</header>
+
+
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard-grid">
+
+      <div class="dashboard-card glass-card">
+
+        <h3>Total Students</h3>
+
+        <h2 id="studentsCount">0</h2>
+
+      </div>
+
+      <div class="dashboard-card glass-card success-card">
+
+        <h3>Present</h3>
+
+        <h2 id="presentCount">0</h2>
+
+      </div>
+
+      <div class="dashboard-card glass-card warning-card">
+
+        <h3>Meals Issued</h3>
+
+        <h2 id="mealCount">0</h2>
+
+      </div>
+
+      <div class="dashboard-card glass-card info-card">
+
+        <h3>Photos Completed</h3>
+
+        <h2 id="photoCount">0</h2>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- MAIN GRID -->
+
+    <section class="content-grid">
+
+
+      <!-- SCANNER -->
+
+      <div class="scanner-panel glass-card">
+
+        <div class="section-title">
+
+          <i class="fa-solid fa-qrcode"></i>
+
+          <h2>Live Student Search</h2>
+
+        </div>
+
+        <div id="reader"></div>
+
+        <div class="scanner-overlay">
+
+          <div class="scanner-line"></div>
+
+        </div>
+
+        <div class="scanner-box">
+
+          <input
+            type="text"
+            id="barcode"
+            placeholder="Scan Barcode, NIC, Student Name"
+            autofocus
+          >
+
+          <button onclick="scanBarcode()">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            Search
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STUDENT PANEL -->
+
+      <div class="student-panel glass-card">
+
+        <div class="student-header">
+
+          <div class="student-avatar">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+          </div>
+
+          <div>
+
+            <h2 id="studentName">
+              No Student Loaded
+            </h2>
+
+            <p id="faculty">
+              Faculty
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DETAILS -->
+
+        <div class="student-details">
+
+          <div class="detail-item">
+
+            <span>Batch</span>
+
+            <strong id="batch">-</strong>
+
+          </div>
+
+          <div class="detail-item">
+
+            <span>Attendance</span>
+
+            <strong
+              id="attendance"
+              class="status-badge pending"
+            >
+              PENDING
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ACTIONS -->
+
+        <div class="action-grid">
+
+<button class="action-btn"
+        data-field="Main_Lunch_Pack"
+        onclick="updateField('Main_Lunch_Pack', 'ISSUED', this)">
+  <i class="fa-solid fa-utensils"></i>
+  Main Lunch
+</button>
+
+
+
+<button class="action-btn"
+        data-field="Extra_Lunch_Pack"
+        onclick="updateField('Extra_Lunch_Pack', 'ISSUED', this)">
+  <i class="fa-solid fa-burger"></i>
+  Extra Lunch
+</button>
+
+        
+
+<button class="action-btn"
+        data-field="Cloak_Status"
+        onclick="updateField('Cloak_Status', 'ISSUED', this)">
+  <i class="fa-solid fa-shirt"></i>
+  Cloak
+</button>
+
+
+<button class="action-btn"
+        data-field="Photo_1"
+        onclick="updateField('Photo_1', 'DONE', this)">
+  <i class="fa-solid fa-camera"></i>
+  Photo 1
+</button>
+
+
+<button class="action-btn"
+        data-field="Photo_2"
+        onclick="updateField('Photo_2', 'DONE', this)">
+  <i class="fa-solid fa-camera"></i>
+  Photo 2
+</button>
+
+
+<button class="action-btn"
+        data-field="Photo_3"
+        onclick="updateField('Photo_3', 'DONE', this)">
+  <i class="fa-solid fa-camera"></i>
+  Photo 3
+</button>
+
+
+<button class="action-btn"
+        data-field="Photo_4"
+        onclick="updateField('Photo_4', 'DONE', this)">
+  <i class="fa-solid fa-camera"></i>
+  Photo 4
+</button>
+
+
+
+        
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+
+<div id="toastContainer"></div>
+
+
+
+
+<div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loading-box">
+        <div class="holo-spinner">
+            <div class="ring"></div>
+            <div class="ring ring2"></div>
+            <div class="scan-line"></div>
+        </div>
+
+        <h2 id="loadingText">Loading Student Data...</h2>
+        <p>Please wait a moment</p>
+    </div>
+</div>
+
+
+<!-- JS -->
+
+<!-- QR -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- Authentication -->
+<script src="auth.js"></script>
+
+<!-- Main Application -->
+<script src="app.js"></script>
+
+
+
+
+</body>
+</html>
