@@ -99,8 +99,21 @@ showLoader("Searching Student...");
         data.student.batch || '-';
 
       // Attendance badge
-      document.getElementById('attendance').innerHTML =
-        '<span class="status-badge present">PRESENT</span>';
+     
+
+
+const status =
+  (data.student.attendance_status || 'PENDING').toUpperCase();
+
+let cssClass = 'pending';
+
+if (status === 'PRESENT') cssClass = 'present';
+if (status === 'ABSENT') cssClass = 'absent';
+
+document.getElementById('attendance').innerHTML =
+  `<span class="status-badge ${cssClass}">${status}</span>`;
+
+
 
       // Clear and refocus
       barcodeInput.value = '';
@@ -202,67 +215,65 @@ function highlightCompletedButtons(student) {
 
 
 
+
+
+
+
 async function updateField(field, value, buttonElement = null) {
   if (!currentRow) {
     showToast('Please load a student first', 'warning');
     focusBarcode();
-    loadDashboardStats();
     return;
   }
 
-  const payload = {
-    action: 'update',
-    row: currentRow,
-    barcode: currentBarcode,
-    name: currentName,
-    field: field,
-    value: value,
-    updatedBy: 'Reception_01'
-  };
+  const formData = new FormData();
+  formData.append('action', 'update');
+  formData.append('row', currentRow);
+  formData.append('barcode', currentBarcode || '');
+  formData.append('name', currentName || '');
+  formData.append('field', field);
+  formData.append('value', value);
+  formData.append('updatedBy', 'Reception_01');
 
-showLoader("Updating Data...");
+  showLoader('Updating Data...');
 
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      mode: 'no-cors', // IMPORTANT
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+      body: formData
     });
 
-    // In no-cors mode, we cannot read response.json()
-    // So we assume success if no fetch error occurs.
+    const result = await response.json();
 
+    if (result.status !== 'success') {
+      throw new Error(result.message || 'Update failed');
+    }
+
+    // Mark button as completed
     if (buttonElement) {
       buttonElement.classList.add('completed');
       buttonElement.disabled = true;
     }
 
-
-hideLoader();
-
-showToast(
-  field.replace(/_/g, ' ') + ' updated successfully',
-  'success'
-);
-
-loadDashboardStats();
-
-
-
-    // Update attendance badge if needed
+    // Update attendance badge
     if (field === 'Attendance_Status') {
       document.getElementById('attendance').innerHTML =
         '<span class="status-badge present">PRESENT</span>';
     }
 
+    hideLoader();
+
+    showToast(
+      field.replace(/_/g, ' ') + ' updated successfully',
+      'success'
+    );
+
+    loadDashboardStats();
     focusBarcode();
 
   } catch (error) {
     hideLoader();
-    console.error(error);
+    console.error('Update Error:', error);
     showToast('Update Failed: ' + error.message, 'error');
     focusBarcode();
   }
@@ -306,6 +317,9 @@ async function loadDashboardStats() {
 
       document.getElementById('mealCount').textContent =
         data.mealsIssued || 0;
+
+     document.getElementById('cloakCount').textContent =
+       data.cloaksIssued || 0;
 
       document.getElementById('photoCount').textContent =
         data.photosCompleted || 0;
