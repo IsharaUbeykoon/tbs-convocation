@@ -143,6 +143,17 @@
 
       </div>
 
+
+<div class="dashboard-card glass-card info-card">
+  <h3>Cloaks Issued</h3>
+  <h2 id="cloakCount">0</h2>
+</div>
+
+
+
+
+
+
       <div class="dashboard-card glass-card info-card">
 
         <h3>Photos Completed</h3>
@@ -237,7 +248,7 @@
 
           <div class="detail-item">
 
-            <span>Batch</span>
+            <span>SEAT NO</span>
 
             <strong id="batch">-</strong>
 
@@ -263,6 +274,15 @@
         <!-- ACTIONS -->
 
         <div class="action-grid">
+
+
+<button class="action-btn"
+        data-field="Attendance_Status"
+        onclick="updateField('Attendance_Status', 'PRESENT', this)">
+  <i class="fa-solid fa-user-check"></i>
+  Mark Attendance
+</button>
+
 
 <button class="action-btn"
         data-field="Main_Lunch_Pack"
